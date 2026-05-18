@@ -1,19 +1,22 @@
-import { prisma } from "@/lib/prisma";
+import { api } from "@/lib/api";
 import { Hero } from "@/components/features/Hero";
 import { ProductCard } from "@/components/features/ProductCard";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 export default async function Home() {
-  const bestsellers = await prisma.product.findMany({
-    take: 8,
-    include: { images: true, variants: true },
-  });
-
-  const categories = await prisma.category.findMany({
-    where: { parentId: null },
-    take: 4,
-  });
+  // Fetch from Cloudflare API instead of direct Prisma
+  let bestsellers = [];
+  let categories = [];
+  
+  try {
+    [bestsellers, categories] = await Promise.all([
+      api.getProducts(),
+      api.getCategories()
+    ]);
+  } catch (error) {
+    console.error("Failed to fetch data from Cloudflare API:", error);
+  }
 
   return (
     <div className="flex flex-col space-y-12 pb-12">
@@ -28,7 +31,7 @@ export default async function Home() {
           </Link>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {categories.map((cat) => (
+          {categories.map((cat: any) => (
             <Link key={cat.id} href={`/category/${cat.slug}`} className="group relative h-40 rounded-xl overflow-hidden shadow-sm">
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10" />
               <div className="absolute inset-0 bg-primary/20 group-hover:bg-primary/40 transition-colors z-0" />
@@ -49,7 +52,7 @@ export default async function Home() {
           </Link>
         </div>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-          {bestsellers.map((product) => (
+          {bestsellers.map((product: any) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>
