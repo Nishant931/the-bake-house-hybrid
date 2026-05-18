@@ -73,34 +73,34 @@ export async function Header() {
                         <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
                           {category.children.map((child: any) => (
                             <li key={child.id}>
-                              <NavigationMenuLink asChild>
-                                <Link
-                                  href={`/category/${child.slug}`}
-                                  className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                                >
-                                  <div className="text-sm font-medium leading-none">{child.name}</div>
-                                </Link>
-                              </NavigationMenuLink>
+<Link
+	                                href={`/category/${child.slug}`}
+	                                className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+	                              >
+	                                <NavigationMenuLink>
+	                                  <div className="text-sm font-medium leading-none">{child.name}</div>
+	                                </NavigationMenuLink>
+	                              </Link>
                             </li>
                           ))}
                         </ul>
                       </NavigationMenuContent>
                     </>
                   ) : (
-                    <Link href={`/category/${category.slug}`} legacyBehavior passHref>
-                      <NavigationMenuLink className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium transition-colors hover:text-primary focus:text-primary focus:outline-none disabled:pointer-events-none disabled:opacity-50">
-                        {category.name}
-                      </NavigationMenuLink>
-                    </Link>
+<Link href={`/category/${category.slug}`} passHref>
+	                      <NavigationMenuLink className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium transition-colors hover:text-primary focus:text-primary focus:outline-none disabled:pointer-events-none disabled:opacity-50">
+	                        {category.name}
+	                      </NavigationMenuLink>
+	                    </Link>
                   )}
                 </NavigationMenuItem>
               ))}
               <NavigationMenuItem>
-                <Link href="/bestsellers" legacyBehavior passHref>
-                   <NavigationMenuLink className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium text-primary font-bold">
-                    Bestsellers
-                  </NavigationMenuLink>
-                </Link>
+<Link href="/bestsellers" passHref>
+	                   <NavigationMenuLink className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium text-primary font-bold">
+	                    Bestsellers
+	                  </NavigationMenuLink>
+	                </Link>
               </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>

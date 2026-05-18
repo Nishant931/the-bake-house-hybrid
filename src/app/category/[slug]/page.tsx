@@ -10,8 +10,8 @@ export default async function CategoryPage({
 }) {
   const { slug } = await params;
   
-  let category = null;
-  let products = [];
+  let category: any = null;
+  let products: any[] = [];
   
   try {
     const categories = await api.getCategories();

@@ -20,7 +20,7 @@ export default async function ProductPage({
 }) {
   const { slug } = await params;
   
-  let product = null;
+  let product: any = null;
   
   try {
     const products = await api.getProducts();

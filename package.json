@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:cf": "exit 0",
     "start": "next start",
     "lint": "next lint",
     "scrape": "node scripts/scraper.js"
@@ -31,6 +32,7 @@
     "zustand": "^5.0.13"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260517.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",

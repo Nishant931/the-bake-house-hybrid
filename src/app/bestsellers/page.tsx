@@ -3,7 +3,7 @@ import { ProductCard } from "@/components/features/ProductCard";
 import { Separator } from "@/components/ui/separator";
 
 export default async function BestsellersPage() {
-  let products = [];
+  let products: any[] = [];
   
   try {
     products = await api.getProducts();

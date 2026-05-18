@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Facebook, Instagram, Twitter } from "lucide-react";
+import { Globe, Share2, MessageCircle } from "lucide-react";
 
 export function Footer() {
   return (
@@ -12,9 +12,9 @@ export function Footer() {
               Premium quality cakes and desserts delivered to your doorstep. Making every occasion special since 2026.
             </p>
             <div className="flex space-x-4">
-              <Facebook className="h-5 w-5 cursor-pointer hover:text-primary transition-colors" />
-              <Instagram className="h-5 w-5 cursor-pointer hover:text-primary transition-colors" />
-              <Twitter className="h-5 w-5 cursor-pointer hover:text-primary transition-colors" />
+              <Globe className="h-5 w-5 cursor-pointer hover:text-primary transition-colors" />
+              <Share2 className="h-5 w-5 cursor-pointer hover:text-primary transition-colors" />
+              <MessageCircle className="h-5 w-5 cursor-pointer hover:text-primary transition-colors" />
               {/* <Youtube className="h-5 w-5 cursor-pointer hover:text-primary transition-colors" /> */}
             </div>
           </div>
