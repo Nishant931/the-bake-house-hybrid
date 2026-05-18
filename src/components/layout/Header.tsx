@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Search, ShoppingCart, User, MapPin } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { prisma } from "@/lib/prisma";
+import { api } from "@/lib/api";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -13,10 +13,16 @@ import {
 } from "@/components/ui/navigation-menu";
 
 export async function Header() {
-  const categories = await prisma.category.findMany({
-    where: { parentId: null },
-    include: { children: true },
-  });
+  let categories = [];
+  
+  try {
+    categories = await api.getCategories();
+  } catch (error) {
+    console.error("Failed to fetch categories in Header:", error);
+  }
+
+  // Filter for top-level categories if the API returns all
+  const topLevelCategories = categories.filter((cat: any) => !cat.parentId);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -56,16 +62,16 @@ export async function Header() {
         <div className="container mx-auto px-4">
           <NavigationMenu className="max-w-full justify-start py-1">
             <NavigationMenuList className="flex-wrap">
-              {categories.map((category) => (
+              {topLevelCategories.map((category: any) => (
                 <NavigationMenuItem key={category.id}>
-                  {category.children.length > 0 ? (
+                  {category.children && category.children.length > 0 ? (
                     <>
                       <NavigationMenuTrigger className="bg-transparent hover:text-primary">
                         {category.name}
                       </NavigationMenuTrigger>
                       <NavigationMenuContent>
                         <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-                          {category.children.map((child) => (
+                          {category.children.map((child: any) => (
                             <li key={child.id}>
                               <NavigationMenuLink asChild>
                                 <Link
