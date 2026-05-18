@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Facebook, Instagram, Twitter, Youtube } from "lucide-react";
+import { Facebook, Instagram, Twitter } from "lucide-react";
 
 export function Footer() {
   return (
@@ -15,7 +15,7 @@ export function Footer() {
               <Facebook className="h-5 w-5 cursor-pointer hover:text-primary transition-colors" />
               <Instagram className="h-5 w-5 cursor-pointer hover:text-primary transition-colors" />
               <Twitter className="h-5 w-5 cursor-pointer hover:text-primary transition-colors" />
-              <Youtube className="h-5 w-5 cursor-pointer hover:text-primary transition-colors" />
+              {/* <Youtube className="h-5 w-5 cursor-pointer hover:text-primary transition-colors" /> */}
             </div>
           </div>
 
