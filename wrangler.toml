@@ -1,0 +1,9 @@
+name = "the-bake-house"
+compatibility_date = "2024-04-01"
+compatibility_flags = ["nodejs_compat"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "the-bake-house-db"
+database_id = "2277754c-b925-4e6d-b413-af01de4fa68c"
+migrations_dir = "prisma/migrations"
