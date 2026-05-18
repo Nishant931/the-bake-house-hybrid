@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma";
+import { api } from "@/lib/api";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import { Star, ShieldCheck, Clock, CheckCircle2 } from "lucide-react";
@@ -20,20 +20,20 @@ export default async function ProductPage({
 }) {
   const { slug } = await params;
   
-  const product = await prisma.product.findUnique({
-    where: { slug },
-    include: {
-      images: true,
-      variants: true,
-      category: true,
-    },
-  });
+  let product = null;
+  
+  try {
+    const products = await api.getProducts();
+    product = products.find((p: any) => p.slug === slug);
+  } catch (error) {
+    console.error("Failed to fetch product data:", error);
+  }
 
   if (!product) {
     notFound();
   }
 
-  const defaultVariant = product.variants[0];
+  const defaultVariant = product.variants?.[0];
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -42,7 +42,7 @@ export default async function ProductPage({
         <div className="space-y-4">
           <Carousel className="w-full max-w-xl mx-auto">
             <CarouselContent>
-              {product.images.map((image, index) => (
+              {product.images?.map((image: any, index: number) => (
                 <CarouselItem key={image.id}>
                   <div className="relative aspect-square rounded-xl overflow-hidden border">
                     <Image
@@ -60,7 +60,7 @@ export default async function ProductPage({
           </Carousel>
           
           <div className="flex space-x-2 overflow-x-auto pb-2">
-            {product.images.map((image) => (
+            {product.images?.map((image: any) => (
               <div key={image.id} className="relative w-20 h-20 flex-shrink-0 rounded-md overflow-hidden border cursor-pointer hover:border-primary">
                 <Image
                   src={image.url}
@@ -78,7 +78,7 @@ export default async function ProductPage({
           <div className="space-y-2">
             <div className="flex items-center space-x-2">
               <Badge variant="secondary" className="bg-primary/10 text-primary border-none">
-                {product.category.name}
+                {product.category?.name || "Bakery"}
               </Badge>
               {product.isEggless && (
                 <Badge variant="outline" className="text-green-600 border-green-600">
@@ -110,11 +110,11 @@ export default async function ProductPage({
           <div className="space-y-3">
             <h4 className="font-semibold">Select Weight</h4>
             <div className="flex flex-wrap gap-2">
-              {product.variants.map((v) => (
+              {product.variants?.map((v: any) => (
                 <Button 
                   key={v.id} 
                   variant="outline" 
-                  className={`rounded-full px-6 ${v.id === defaultVariant.id ? 'border-primary bg-primary/5 text-primary' : ''}`}
+                  className={`rounded-full px-6 ${v.id === defaultVariant?.id ? 'border-primary bg-primary/5 text-primary' : ''}`}
                 >
                   {v.weight}
                 </Button>

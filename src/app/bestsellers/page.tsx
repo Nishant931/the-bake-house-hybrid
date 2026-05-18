@@ -1,13 +1,17 @@
-import { prisma } from "@/lib/prisma";
+import { api } from "@/lib/api";
 import { ProductCard } from "@/components/features/ProductCard";
 import { Separator } from "@/components/ui/separator";
 
 export default async function BestsellersPage() {
-  const products = await prisma.product.findMany({
-    take: 20,
-    include: { images: true, variants: true },
-    orderBy: { createdAt: 'desc' } // For now, just show newest as bestsellers
-  });
+  let products = [];
+  
+  try {
+    products = await api.getProducts();
+    // For now, just taking the first 20 as bestsellers
+    products = products.slice(0, 20);
+  } catch (error) {
+    console.error("Failed to fetch bestsellers:", error);
+  }
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -20,7 +24,7 @@ export default async function BestsellersPage() {
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-        {products.map((product) => (
+        {products.map((product: any) => (
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
